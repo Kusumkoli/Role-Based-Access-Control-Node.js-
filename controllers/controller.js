@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 
+
 async function hashPassword(pw) {
     return await bcrypt.hash(pw, 10);
 };
@@ -11,31 +12,67 @@ async function validatePassword(plainPW, hashedPW) {
     return await bcrypt.compare(plainPW, hashedPW);
 };
     
+const { roles } = require('../roles')
+ 
+exports.grantAccess = function(action, resource) {
+ return async (req, res, next) => {
+  try {
+   const permission = roles.can(req.user.role)[action](resource);
+   if (!permission.granted) {
+    return res.status(401).json({
+     error: "You don't have enough permission to perform this action"
+    });
+   }
+   next()
+  } catch (error) {
+   next(error)
+  }
+ }
+}
+ 
+exports.allowIfLoggedin = async (req, res, next) => {
+    try {
+        const user = res.locals.loggedInUser;
+        if (!user)
+        return res.status(401).json({
+            error: "You need to be logged in to access this route"
+    });
+    req.user = user;
+    next();
+    } catch (error) {
+    next(error);
+    }
+}
+
+
 exports.getSignup = (req, res, next) => {
     res.render('login', {pageTitle: 'Sign Up'});
 };
 
 exports.postSignup = async (req, res, next) => {
     try {
-        const {email, password, role} = req.body;
+        const email = req.body.email;
+        const password = req.body.password;
+        const role = req.body.role;
         const hashedPassword = await hashPassword(password);
-        const newUser = new User({email, password: hashedPassword, role: role || "user"});
+        const newUser = new User({email, password: hashedPassword, role});
         const accessToken = jwt.sign({ userId: newUser._Id}, process.env.JWT_SECRET, {
             expiresIn: "1d"
         });
         newUser.accessToken = accessToken;
         await newUser.save();
         res.json({ data: newUser, accessToken});
+        res.render('dashboard', {pageTitle: 'Dashboard'});
     } catch(err) {
         next(err);
     }
 };
 
 exports.getLogin = (req, res, next) => {
-    res.render('login', {pageTitle: 'Login'});
+    res.render('login', {pageTitle: 'Sign In'});
 };
 
-exports.postLogin = async (req, res, next) => {
+exports.login = async (req, res, next) => {
     try {
      const { email, password } = req.body;
      const user = await User.findOne({ email });
@@ -56,9 +93,9 @@ exports.postLogin = async (req, res, next) => {
     }
 }
 
-exports.getAdminSignIn = (req, res, next) => {
-    res.render('login', {pageTitle: 'Admin Login'});
-};
+// exports.getAdminSignIn = (req, res, next) => {
+//     res.render('login', {pageTitle: 'Admin Login'});
+// };
 
 
 exports.getUsers = async (req, res, next) => {
@@ -108,3 +145,4 @@ exports.deleteUser = async (req, res, next) => {
      next(error)
     }
 }
+
