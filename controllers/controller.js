@@ -11,7 +11,13 @@ async function hashPassword(pw) {
 async function validatePassword(plainPW, hashedPW) {
     return await bcrypt.compare(plainPW, hashedPW);
 };
-    
+
+var adminAccount = new User({email: 'admin1234@gmail.com', password: '1234', role: 'admin'});
+adminAccount.save(function (err) {
+    if (err) return console.log(err);
+});
+
+
 const { roles } = require('../roles')
  
 exports.grantAccess = function(action, resource) {
@@ -61,8 +67,8 @@ exports.postSignup = async (req, res, next) => {
         });
         newUser.accessToken = accessToken;
         await newUser.save();
-        res.json({ data: newUser, accessToken});
-        res.render('dashboard', {pageTitle: 'Dashboard'});
+        console.log({ data: newUser, accessToken});
+        res.render('dashboard', {pageTitle: 'Dashboard', data: newUser});
     } catch(err) {
         next(err);
     }
@@ -70,6 +76,10 @@ exports.postSignup = async (req, res, next) => {
 
 exports.getLogin = (req, res, next) => {
     res.render('login', {pageTitle: 'Sign In'});
+};
+
+exports.adminSignin = (req, res, next) => {
+    res.render('login', {pageTitle: 'Admin Login'});
 };
 
 exports.login = async (req, res, next) => {
@@ -83,11 +93,12 @@ exports.login = async (req, res, next) => {
       expiresIn: "1d"
      });
      await User.findByIdAndUpdate(user._id, { accessToken })
-     res.status(200).json({
-      data: { email: user.email, role: user.role },
-      accessToken
-     });
-     res.render('dashboard', {pageTitle: 'Dashboard'});
+     console.log({
+        data: { email: user.email, role: user.role },
+        accessToken
+       });
+     res.status(200).render('dashboard', {pageTitle: 'Dashboard', data: { email: user.email, role: user.role },
+     accessToken});
     } catch (error) {
      next(error);
     }

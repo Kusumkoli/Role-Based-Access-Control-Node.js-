@@ -27,8 +27,14 @@
                     <% } else { %> 
                         <input type="hidden" name="role" value="user">
                     <% } %>
-                    <h5>Don't have an account? <a href="/signup">Sign up</a></h5>
-                    <h5>Sign In as <a href="/admin-signin">Admin</a></h5>
+                    <% if (pageTitle === 'Sign Up') { %>
+                        <h5>Already have an account? <a href="/">Sign In</a></h5>
+                    <% } else { %>
+                        <h5>Don't have an account? <a href="/signup">Sign Up</a></h5>
+                    <% } %>
+                    <% if (pageTitle !== 'Admin Login') { %>
+                        <h5>Sign In as <a href="/admin-signin">Admin</a></h5>
+                    <% } %>
                 </form>
             </div>
         </div>

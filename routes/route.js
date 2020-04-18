@@ -7,6 +7,8 @@ router.get('/signup', userController.getSignup);
 router.post('/signup', userController.postSignup);
  
 router.post('/login', userController.login);
+
+router.get('/admin-signin', userController.adminSignin);
  
 router.get('/user/:userId', userController.allowIfLoggedin, userController.getUser);
  

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="icon" type="image/png" href="/images/favicon.ico">
+    <link rel="stylesheet" href="/css/dashboard.css">
+
+</head>
+<body>
+    <div class="dashboard-nav">
+        <h3><%= data.email.split('@',1)[0] %></h3>
+        <% if(data.role === 'admin') { %>
+            <ul>
+                <li></li>
+            </ul>
+        <% } %>
+    </div>
+    <div class="dashboard-items">
+        
+    </div>
+</body>
+</html>

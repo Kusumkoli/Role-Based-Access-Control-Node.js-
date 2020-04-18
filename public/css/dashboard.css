@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #eaf2f4;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard-nav {
+    height: 100vh;
+    width: 400px;
+    background-color: #407aff;
+    display: flex;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.dashboard-items {
+    height: 100vh;
+    background-color: antiquewhite;
+    background-image: url('../images/login-img.svg');
+    background-size: 100px 100px;
+}
+
