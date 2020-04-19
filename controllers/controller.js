@@ -12,7 +12,7 @@ async function validatePassword(plainPW, hashedPW) {
     return await bcrypt.compare(plainPW, hashedPW);
 };
 
-var adminAccount = new User({email: 'admin1234@gmail.com', password: '1234', role: 'admin'});
+var adminAccount = new User({email: 'admin1234@gmail.com', password: '$2b$10$DKm0pRbJPaNlCfCt1Y80Puo5e9mD2/LvPx4OejfYoosZR73p3wVgC', role: 'admin'});
 adminAccount.save(function (err) {
     if (err) return console.log(err);
 });
@@ -84,9 +84,11 @@ exports.adminSignin = (req, res, next) => {
 
 exports.login = async (req, res, next) => {
     try {
-     const { email, password } = req.body;
-     const user = await User.findOne({ email });
-     if (!user) return next(new Error('Email does not exist'));
+     const email = req.body.email;
+     const password = req.body.password;
+     const role = req.body.role;
+     const user = await User.findOne({email});
+     if (!user && role==='admin') return res.render('login', {pageTitle:'Admin Login', user: true});
      const validPassword = await validatePassword(password, user.password);
      if (!validPassword) return next(new Error('Password is not correct'))
      const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {

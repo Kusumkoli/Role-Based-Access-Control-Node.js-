@@ -6,19 +6,34 @@
     <title><%= pageTitle %></title>
     <link rel="icon" type="image/png" href="/images/favicon.ico">
     <link rel="stylesheet" href="/css/dashboard.css">
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
 
 </head>
 <body>
     <div class="dashboard-nav">
-        <h3><%= data.email.split('@',1)[0] %></h3>
-        <% if(data.role === 'admin') { %>
+        <% if(data.role === 'user') { %>
             <ul>
-                <li></li>
+                <li><i class="fas fa-align-left"></i></li>
+                <li><i class="fas fa-archive"></i></li>
+                <li><i class="fas fa-folder"></i></li>
+                <li><i class="fas fa-bookmark"></i></li>
+                <li><i class="fas fa-calendar"></i></li>
             </ul>
         <% } %>
     </div>
     <div class="dashboard-items">
-        
+        <div class="dashboard-content-area">
+            <img src="/images/dashboard_img.svg" alt="">
+        </div>
+    </div>
+    <div class="proflie-menu">
+        <div class="profile-info-div">
+            <div><i class="fas fa-address-book"></i></div>
+            <div class="email-name">
+                <h3>Hi, <%= data.email.split('@',1)[0] %></h3>
+                <h5><%= data.email %></h5>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -2,25 +2,95 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #eaf2f4;
+    background-color: #407aff;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: row;
 }
 
 .dashboard-nav {
+    flex-grow: 1;
     height: 100vh;
-    width: 400px;
     background-color: #407aff;
     display: flex;
     justify-content: center;
+    color: #272525;
+}
+
+.dashboard-nav ul {
+    padding: 0;
+    margin: 20px 0px 0px 0px;
+}
+
+.dashboard-nav ul li {
+    list-style: none;
+    display: grid;
+    justify-content: center;
+}
+
+.dashboard-nav ul li i.fas {
+    font-size: 30px;
+    color: #eaf2f4;
+    margin: 20px 0px; 
+}
+
+.dashboard-nav ul li i.fas:hover {
     color: #ffffff;
 }
 
 .dashboard-items {
+    flex-grow: 7;
     height: 100vh;
-    background-color: antiquewhite;
-    background-image: url('../images/login-img.svg');
-    background-size: 100px 100px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    border-top-left-radius: 30px;
+    background-color: white;
 }
 
+.dashboard-content-area {
+    height: 500px;
+    width: 500px;
+}
+
+.dashboard-content-area img {
+    height: inherit;
+    width: inherit;
+}
+
+.proflie-menu {
+    height: 100vh;
+    flex-grow: 4;
+    background-color: #eaf2f4;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info-div {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 3px solid transparent;
+    margin: 10px;
+    padding: 20px 0px 20px 10px;
+    border-radius: 10px;
+}
+
+.fa-address-book {
+    color: #407aff;
+    font-size: 30px;
+    margin: 5px;
+}
+
+.email-name {
+    padding: 0px 0px 0px 5px;
+}
+
+.email-name h3{
+    margin: 0;
+}
+
+.email-name h5 {
+    margin: 2px;
+    color: grey;
+}
