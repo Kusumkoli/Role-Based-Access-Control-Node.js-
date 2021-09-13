@@ -1,7 +1,7 @@
-#Ambase Set-up
+Ambase Set-up
 
 
-##1. Clone github repo: 
+#1. Clone github repo: 
 
 $ git clone https://<git_token>@github.com/ambitionboxofficial/ambase.git 
 Note: You can use this link to create your own personal token.
